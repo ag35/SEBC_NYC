@@ -1,5 +1,4 @@
-\\\
-
+```
 On Each node -- I'm cloning my instanse so I'm applying all the changes to one node before cloning
 	1. Disable selinux
 		vi /etc/selinux/config
@@ -49,12 +48,7 @@ On Each node -- I'm cloning my instanse so I'm applying all the changes to one n
 		chkconfig nscd on
 	18 Make sure ntpd service is configured and running at boot
 	19. CLone your instance
-
-
-
-				
-\\\
-
-			
+		
+```		
 		
 	
