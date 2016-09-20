@@ -2,7 +2,7 @@
 Test results for terasorts - did not see much difference either with cache pooling or without
 
 --------- Before teragen: 2m23.476s, terasort: 4m45.211s
-time hadoop jar /opt/cloudera/parcels/CDH-5.8.0-1.cdh5.8.0.p0.42/jars/hadoop-examples.jar teragen -D dfs.block.size=33554432 107374182 /user/ec2-user/sebc_hdfs_teragen_before_caching
+time hadoop jar /opt/cloudera/parcels/CDH-5.8.0-1.cdh5.8.0.p0.42/jars/hadoop-examples.jar teragen -D dfs.block.size=33554432 107374182 /user/ec2-user/sebc_hdfs_teragen_after_caching
 16/09/20 16:05:50 INFO mapreduce.Job: Counters: 31
         File System Counters
                 FILE: Number of bytes read=0
@@ -47,7 +47,7 @@ user    0m6.598s
 sys     0m0.285s
 
 
-time hadoop jar /opt/cloudera/parcels/CDH-5.8.0-1.cdh5.8.0.p0.42/jars/hadoop-examples.jar terasort /user/ec2-user/sebc_hdfs_teragen_before_caching /user/ec2-user/sebc_hdfs_terasort_before_caching
+time hadoop jar /opt/cloudera/parcels/CDH-5.8.0-1.cdh5.8.0.p0.42/jars/hadoop-examples.jar terasort /user/ec2-user/sebc_hdfs_teragen_after_caching /user/ec2-user/sebc_hdfs_terasort_after_caching
 
 16/09/20 16:13:09 INFO mapreduce.Job: Counters: 50
         File System Counters
@@ -117,54 +117,11 @@ sys     0m0.414s
 [root@ip-172-31-61-212 ~]# su - hdfs
 -bash-4.1$ hdfs cacheadmin -addPool TEST_CACHING
 Successfully added cache pool TEST_CACHING.
--bash-4.1$ hdfs cacheadmin -addDirective -path /user/ec2-user -pool TEST_CACHING
+-bash-4.1$ hdfs cacheadmin -addDirective -path /user/ec2-user/sebc_hdfs_teragen_after_caching -pool TEST_CACHING
 Added cache directive 1
 ---------------
 
--------- After teragen: 2m23.221s, terasort: 4m48.907s
-time hadoop jar /opt/cloudera/parcels/CDH-5.8.0-1.cdh5.8.0.p0.42/jars/hadoop-examples.jar teragen -D dfs.block.size=33554432 107374182 /user/ec2-user/sebc_hdfs_teragen_after_caching
-16/09/20 16:29:13 INFO mapreduce.Job: Counters: 31
-        File System Counters
-                FILE: Number of bytes read=0
-                FILE: Number of bytes written=240546
-                FILE: Number of read operations=0
-                FILE: Number of large read operations=0
-                FILE: Number of write operations=0
-                HDFS: Number of bytes read=170
-                HDFS: Number of bytes written=10737418200
-                HDFS: Number of read operations=8
-                HDFS: Number of large read operations=0
-                HDFS: Number of write operations=4
-        Job Counters
-                Launched map tasks=2
-                Other local map tasks=2
-                Total time spent by all maps in occupied slots (ms)=256667
-                Total time spent by all reduces in occupied slots (ms)=0
-                Total time spent by all map tasks (ms)=256667
-                Total vcore-seconds taken by all map tasks=256667
-                Total megabyte-seconds taken by all map tasks=262827008
-        Map-Reduce Framework
-                Map input records=107374182
-                Map output records=107374182
-                Input split bytes=170
-                Spilled Records=0
-                Failed Shuffles=0
-                Merged Map outputs=0
-                GC time elapsed (ms)=1711
-                CPU time spent (ms)=182280
-                Physical memory (bytes) snapshot=375205888
-                Virtual memory (bytes) snapshot=3143188480
-                Total committed heap usage (bytes)=427294720
-        org.apache.hadoop.examples.terasort.TeraGen$Counters
-                CHECKSUM=230593859918397906
-        File Input Format Counters
-                Bytes Read=0
-        File Output Format Counters
-                Bytes Written=10737418200
-
-real    2m23.221s
-user    0m6.674s
-sys     0m0.242s
+-------- After terasort: 4m48.907s
 
 time hadoop jar /opt/cloudera/parcels/CDH-5.8.0-1.cdh5.8.0.p0.42/jars/hadoop-examples.jar terasort /user/ec2-user/sebc_hdfs_teragen_after_caching /user/ec2-user/sebc_hdfs_terasort_after_caching
 16/09/20 16:36:06 INFO mapreduce.Job: Counters: 50
